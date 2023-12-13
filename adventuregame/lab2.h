@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 typedef struct adventureGame {
+    //defining all the variables that is used for this program
     char command[1000];// Command typed by the user
     int room; // The room the user is in. Initialized to start in room#0
     char buf[1000];
