@@ -116,7 +116,7 @@ int processKillMonster(adventureGame *ag) {
             if (ag->monsterStatusArray[ag->room]<0) {ag->monsterStatusArray[ag->room]=0;}
             printf("You dealt %d damage to the %s\n",ag->damageVampire,ag->monsterArray[ag->room]);
         }
-        else if (ag->room==4){//werewilf
+        else if (ag->room==4){//werewolf
             ag->monsterStatusArray[ag->room]=ag->monsterStatusArray[ag->room]-ag->damageWerewolf;
             if (ag->monsterStatusArray[ag->room]<0) {ag->monsterStatusArray[ag->room]=0;}
             printf("You dealt %d damage to the %s\n",ag->damageWerewolf,ag->monsterArray[ag->room]);
@@ -137,6 +137,75 @@ int processKillMonster(adventureGame *ag) {
         if (ag->playerHP<0){ag->playerHP=0;}
         printf("The %s dealt 2 damage to you, you are now at %dhp\n",ag->monsterArray[ag->room],ag->playerHP);
     }
+    return (mandatoryProcess(ag));//calling the process since need to check if player dies, return 0 if dies
+}
+
+int processKillZombie(adventureGame *ag){
+    if (ag->room==2){
+        if (ag->monsterStatusArray[ag->room]==0) {printf("The %s is already dead\n",ag->monsterArray[ag->room]);}
+        if (ag->monsterStatusArray[ag->room]>=1) {
+                ag->monsterStatusArray[ag->room]=ag->monsterStatusArray[ag->room]-ag->damageBase;
+                if (ag->monsterStatusArray[ag->room]<0) {ag->monsterStatusArray[ag->room]=0;}
+                printf("You dealt %d damage to the %s\n",ag->damageBase,ag->monsterArray[ag->room]);
+            }
+
+        if (ag->monsterStatusArray[ag->room]>=1) {printf("The %s is now at %dhp\n",ag->monsterArray[ag->room],ag->monsterStatusArray[ag->room]);}
+        if (ag->monsterStatusArray[ag->room]==0 && ag->monsterFlag[ag->room]==0){//use a flag so that the kill message doesnt display more than one time
+            printf("You killed the %s\n",ag->monsterArray[ag->room]);
+            ag->monsterFlag[ag->room]=1;
+        }
+        if (ag->monsterStatusArray[ag->room]>=1) {//enemy fighting back dealing 2 damage if not dead after player hit
+            ag->playerHP=ag->playerHP-2;
+            if (ag->playerHP<0){ag->playerHP=0;}
+            printf("The %s dealt 2 damage to you, you are now at %dhp\n",ag->monsterArray[ag->room],ag->playerHP);
+        }
+    }else {printf("There is no zombie here\n");}
+    return (mandatoryProcess(ag));//calling the process since need to check if player dies, return 0 if dies
+}
+
+int processKillWerewolf(adventureGame *ag){
+    if (ag->room==4){
+        if (ag->monsterStatusArray[ag->room]==0) {printf("The %s is already dead\n",ag->monsterArray[ag->room]);}
+        if (ag->monsterStatusArray[ag->room]>=1) {
+                ag->monsterStatusArray[ag->room]=ag->monsterStatusArray[ag->room]-ag->damageWerewolf;
+                if (ag->monsterStatusArray[ag->room]<0) {ag->monsterStatusArray[ag->room]=0;}
+                printf("You dealt %d damage to the %s\n",ag->damageWerewolf,ag->monsterArray[ag->room]);
+            }
+
+        if (ag->monsterStatusArray[ag->room]>=1) {printf("The %s is now at %dhp\n",ag->monsterArray[ag->room],ag->monsterStatusArray[ag->room]);}
+        if (ag->monsterStatusArray[ag->room]==0 && ag->monsterFlag[ag->room]==0){//use a flag so that the kill message doesnt display more than one time
+            printf("You killed the %s\n",ag->monsterArray[ag->room]);
+            ag->monsterFlag[ag->room]=1;
+        }
+        if (ag->monsterStatusArray[ag->room]>=1) {//enemy fighting back dealing 2 damage if not dead after player hit
+            ag->playerHP=ag->playerHP-2;
+            if (ag->playerHP<0){ag->playerHP=0;}
+            printf("The %s dealt 2 damage to you, you are now at %dhp\n",ag->monsterArray[ag->room],ag->playerHP);
+        }
+    }else {printf("There is no werewolf here\n");}
+    return (mandatoryProcess(ag));//calling the process since need to check if player dies, return 0 if dies
+}
+
+int processKillDragon(adventureGame *ag){
+    if (ag->room==12){
+        if (ag->monsterStatusArray[ag->room]==0) {printf("The %s is already dead\n",ag->monsterArray[ag->room]);}
+        if (ag->monsterStatusArray[ag->room]>=1) {
+                ag->monsterStatusArray[ag->room]=ag->monsterStatusArray[ag->room]-ag->damageBase;
+                if (ag->monsterStatusArray[ag->room]<0) {ag->monsterStatusArray[ag->room]=0;}
+                printf("You dealt %d damage to the %s\n",ag->damageBase,ag->monsterArray[ag->room]);
+            }
+
+        if (ag->monsterStatusArray[ag->room]>=1) {printf("The %s is now at %dhp\n",ag->monsterArray[ag->room],ag->monsterStatusArray[ag->room]);}
+        if (ag->monsterStatusArray[ag->room]==0 && ag->monsterFlag[ag->room]==0){//use a flag so that the kill message doesnt display more than one time
+            printf("You killed the %s\n",ag->monsterArray[ag->room]);
+            ag->monsterFlag[ag->room]=1;
+        }
+        if (ag->monsterStatusArray[ag->room]>=1) {//enemy fighting back dealing 2 damage if not dead after player hit
+            ag->playerHP=ag->playerHP-2;
+            if (ag->playerHP<0){ag->playerHP=0;}
+            printf("The %s dealt 2 damage to you, you are now at %dhp\n",ag->monsterArray[ag->room],ag->playerHP);
+        }
+    }else {printf("There is no dragon here\n");}
     return (mandatoryProcess(ag));//calling the process since need to check if player dies, return 0 if dies
 }
 
@@ -298,7 +367,8 @@ int processHelp(){
     printf("Command List\n======================\n");
     printf("Movement Command: north/ n/ south/ s/ east/ e/ west/ w - move between rooms\n");
     printf("Look Command: look/ l - inspect room situation\n");
-    printf("Fight Command: fight/ f - fight the enemy in the room\n");
+    printf("Fight Command: fight/ f/ killmonster/ killMonster/ km - fight the enemy in the room\n");
+    printf("Alternate Fight Command: kill zombie/ kill werewolf/ kill dragon - alternate command used to fight the specific enemy ");
     printf("Get Command: get (object) - take the item in the room if there is and player item count is less than 3\n");
     printf("Drop Command: drop (object) - drop the selected object onto the current room\n");
     printf("Inventory Command: inventory/ i - list what the player is carrying\n");
@@ -338,7 +408,12 @@ int processCommand(adventureGame *ag) {
     // Process of other relevant commands, function calls in the format of return(function)
     // is due to the chance of the game ending at that command either due to winning or dying
     if (strncmp(ag->command,"look\n",6)==0 || strncmp(ag->command,"l\n",3)==0) {processLook(*ag); return(1);}
-    if (strncmp(ag->command,"fight\n",7)==0 || strncmp(ag->command,"f\n",3)==0) {return (processKillMonster(ag)); return(1);}
+    if (strncmp(ag->command,"fight\n",7)==0 || strncmp(ag->command,"f\n",3 )==0 ||
+        strncmp(ag->command,"killMonster\n",13)==0 || strncmp(ag->command,"km\n",4)==0 ||
+        strncmp(ag->command,"killmonster\n",13)==0) {return (processKillMonster(ag)); return(1);}
+    if (strncmp(ag->command,"kill zombie\n",13)==0) {return (processKillZombie(ag)); return(1);}
+    if (strncmp(ag->command,"kill werewolf\n",15)==0) {return (processKillWerewolf(ag)); return(1);}
+    if (strncmp(ag->command,"kill dragon\n",13)==0) {return (processKillDragon(ag)); return(1);}
     if (strncmp(ag->command,"get ",4)==0) {processGet(&ag->command[4],ag);return(1);}
     if (strncmp(ag->command,"inventory\n",11)==0 || strncmp(ag->command,"i\n",3)==0) {printInventory(*ag);return(1);}
     if (strncmp(ag->command,"drop ",5)==0) {processDrop(&ag->command[5],ag);return(1);}
