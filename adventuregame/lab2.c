@@ -3,7 +3,7 @@
 
 void processCalc(adventureGame *ag);
 
-int mandatoryProcess(adventureGame *ag){
+int mandatoryProcess(adventureGame *ag){ // a function that is called when some value inside the game has to be checked on whether it should be changed or not
     //part of the function where it determines the damage the player is going to deal
     //changed back to 2 so that the base is consistent even after dropping sword
     if (ag->artifactLoc[0]==-1) {

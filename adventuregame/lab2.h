@@ -27,6 +27,6 @@ typedef struct adventureGame {
     int winFlag;
 } adventureGame;
 
-
+//function declarations
 int processCommand(adventureGame *ag);
 void processStart();

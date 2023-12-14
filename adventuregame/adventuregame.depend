@@ -13,11 +13,11 @@
 1702488090 source:d:\code block\codeblocks\codes\adventure-game\adventuregame\main.c
 	"lab2.h"
 
-1702468138 d:\code block\codeblocks\codes\adventure-game\adventuregame\lab2.h
+1702548600 d:\code block\codeblocks\codes\adventure-game\adventuregame\lab2.h
 	<stdio.h>
 	<stdlib.h>
 
-1702467930 source:d:\code block\codeblocks\codes\adventure-game\adventuregame\lab2.c
+1702548568 source:d:\code block\codeblocks\codes\adventure-game\adventuregame\lab2.c
 	<string.h>
 	"lab2.h"
 
